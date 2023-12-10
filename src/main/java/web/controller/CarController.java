@@ -5,21 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.service.CarService;
+import web.dao.CarDao;
+
 
 @Controller
 public class CarController {
-    private CarService carService;
+    private CarDao carDao;
 
     @Autowired
-    public CarController(CarService carService) {
-        this.carService = carService;
+    public CarController(CarDao carDao) {
+        this.carDao = carDao;
     }
 
     @GetMapping(value = "/cars")
     public String printCar(@RequestParam(value = "count", defaultValue = "5") int count,
                            Model model) {
-        model.addAttribute("cars", carService.getCar(count));
+        model.addAttribute("cars", carDao.getCars(count));
         return "cars";
     }
 }
